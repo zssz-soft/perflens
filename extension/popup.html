@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><title>PerfLens</title>
+<style>
+  body { font: 13px system-ui, sans-serif; margin: 0; padding: 12px 14px; width: 280px; color: #1d1d1f; background: #fff; }
+  h1 { font-size: 14px; margin: 0 0 8px; }
+  .origin { font-family: ui-monospace, monospace; font-size: 12px; word-break: break-all; color: #555; }
+  button { margin-top: 10px; width: 100%; padding: 7px; font: inherit; cursor: pointer; }
+  p { margin: 8px 0 0; color: #555; font-size: 12px; }
+</style>
+<h1>PerfLens (dev)</h1>
+<div class="origin" id="origin">…</div>
+<div id="state"></div>
+<button id="toggle" hidden></button>
+<p id="note">Engedélyezés után a lap újratöltődik: az ügynöknek az alkalmazás ELŐTT kell betöltődnie. A mérés a DevTools „PerfLens” paneljén látszik — ha a panel már nyitva volt, zárd be és nyisd újra a DevTools-t.</p>
+<script src="popup.js"></script>

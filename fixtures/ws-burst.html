@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>fixture: ws-burst</title>
+<h1>ws-burst</h1>
+<p>?ws=ws://…&amp;n=50&amp;size=512&amp;window=200&amp;delay=0&amp;block=0 — a szerver pontosan <i>n</i> db, <i>size</i> bájtos üzenetet küld
+(a füstteszt szervere). <i>delay</i>: csendes előzmény a csatlakozás előtt (a csúcs csak az előzményhez képest csúcs);
+<i>block</i>: az utolsó üzenet kezelője ennyi ms-ig blokkol (a „WS-csúcs után blokkolás" szabály pozitív esete).</p>
+<script src="fixture.js"></script>
+<script>
+window.run = () => {
+  const n = num('n', 50), size = num('size', 512), win = num('window', 200), blk = num('block', 0);
+  setTimeout(() => {
+    const ws = new WebSocket(`${q.get('ws')}/?n=${n}&size=${size}&window=${win}`);
+    let got = 0;
+    ws.onmessage = () => { if (++got === n) { if (blk) block(blk); ws.close(); done(); } };
+  }, num('delay', 0));
+};
+</script>

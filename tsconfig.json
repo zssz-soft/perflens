@@ -1,0 +1,20 @@
+{
+  // A PerfLens saját típusellenőrzése (27-es doksi). Fordítani az esbuild
+  // fordít (build.mjs), a Node pedig natívan futtatja a teszteket — ezért
+  // explicit `.ts` kiterjesztésű importok és csak törölhető TS-szintaxis.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  "include": ["**/*.ts", "**/*.mts"],
+  "exclude": ["dist", "experiments", "worker/entry.ts"]
+}

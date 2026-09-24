@@ -1,0 +1,25 @@
+<!doctype html><meta charset="utf-8"><title>fixture: worker-burst</title>
+<h1>worker-burst</h1>
+<p>?kind=dedicated|shared&amp;n=87&amp;window=100 — a worker pontosan <i>n</i> üzenetet küld <i>window</i> ms alatt; a lap egyet küld vissza.
+Mellette 20 üzenet egy sima <code>MessageChannel</code>-en: ez ütemező-zaj, NEM worker-forgalom — nem szabad beszámolni.</p>
+<script src="fixture.js"></script>
+<script>
+window.run = () => {
+  const kind = q.get('kind') || 'dedicated', n = num('n', 87), win = num('window', 100);
+  const body = `const go = (post) => { for (let i = 0; i < ${n}; i++) setTimeout(() => post({ type: 'tick', i }), ${win} * i / ${n}); };`;
+  const src = kind === 'shared'
+    ? body + `onconnect = (e) => { const p = e.ports[0]; p.onmessage = () => go((m) => p.postMessage(m)); };`
+    : body + `onmessage = () => go((m) => postMessage(m));`;
+  const url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+
+  let got = 0;
+  const onmsg = () => { if (++got === n) done(); };
+  const target = kind === 'shared' ? new SharedWorker(url).port : new Worker(url);
+  target.onmessage = onmsg;
+  target.postMessage({ type: 'hello' });                 // az egyetlen kimenő üzenet
+
+  const mc = new MessageChannel();                       // ütemező-zaj
+  mc.port1.onmessage = () => {};
+  for (let i = 0; i < 20; i++) mc.port2.postMessage({ type: 'sched' });
+};
+</script>

@@ -1,0 +1,20 @@
+{
+  "name": "perflens",
+  "version": "0.6.0",
+  "private": true,
+  "type": "module",
+  "description": "PerfLens — böngésző-oldali teljesítmény-elemző: LoAF, INP, worker- és WS-forgalom élőben, szabályokkal. Kiterjesztésként VAGY a lapba ágyazva.",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tools/boundary.mjs && tsc -p tsconfig.json && node --test \"core/**/*.test.ts\" \"adapters/**/*.test.ts\"",
+    "smoke": "node tools/smoke.mjs",
+    "diff": "node tools/diff.mts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "esbuild": "^0.25.0",
+    "playwright": "1.62.1",
+    "typescript": "~6.0.0",
+    "ws": "^8.18.0"
+  }
+}

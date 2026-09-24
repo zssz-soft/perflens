@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><title>fixture: interaction</title>
+<h1>interaction</h1><p>?ms=120 — a gomb kattintás-kezelője pontosan <i>ms</i>-ig blokkol.</p>
+<button id="b" style="font-size:2rem;padding:1rem 2rem">Kattints</button>
+<script src="fixture.js"></script>
+<script>
+window.run = () => {};
+document.getElementById('b').addEventListener('click', () => { block(num('ms', 120)); done(500); });
+</script>

@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><title>fixture: long-task</title>
+<h1>long-task</h1><p>?ms=120&amp;count=3&amp;gap=300 — pontosan <i>count</i> db, <i>ms</i> hosszú szinkron blokk.</p>
+<script src="fixture.js"></script>
+<script>
+window.run = () => {
+  const ms = num('ms', 120), count = num('count', 3), gap = num('gap', 300);
+  let i = 0;
+  const step = () => { block(ms); if (++i < count) setTimeout(step, gap); else done(); };
+  setTimeout(step, 0);
+};
+</script>
