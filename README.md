@@ -99,9 +99,10 @@ ELŐTT kiértékelve.
 
 ## Eredet
 
-A [tetvonal-ng](https://github.com/zssz-soft/tetvonal-ng) repóból kivágva
-(2026-09-24), a `tools/perflens-extract.mjs` szerinti hordozható halmaz. Az
-ottani `docs/27_teljesitmeny_eszkoz.md` a teljes terv és döntésnapló — a
-kódban a `27-es doksi N.N` hivatkozások arra mutatnak. Ami ott maradt: a
-sportsbook-adapter, a műszerezett worker belépési pontja, és a füstteszt
-alkalmazás-specifikus részei (drift-őr, worker B szint, app-rules).
+Egy nagyobb alkalmazás-repóból kivágva (2026-09-24), annak hordozható
+részeként. A kódban a `27-es doksi N.N` hivatkozások az ottani tervdokumentum
+fejezeteire mutatnak (döntésnapló); ez a dokumentum nem része ennek a repónak.
+
+## Licenc
+
+[MIT](LICENSE)

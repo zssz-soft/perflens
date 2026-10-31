@@ -10,8 +10,8 @@ import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
  *    dist/extension/      a kiterjesztés — „Kicsomagolt bővítmény betöltése"
  *    dist/extension-test/ ugyanaz, loopback host-engedéllyel (füstteszt)
  *
- *  App-tudatos módhoz (saját adapterrel) készíts egy belépési pontot a
- *  `agent/sportsbook.ts` mintájára, és fordítsd azt az `agent/index.ts`
+ *  App-tudatos módhoz (saját adapterrel) készíts egy saját belépési pontot
+ *  (`installAgent({ app })`, lásd README), és fordítsd azt az `agent/index.ts`
  *  helyett — a mag és a felület változatlan marad.
  *
  *      node build.mjs */
@@ -35,7 +35,11 @@ await build({
   },
 });
 cpSync('dist/agent.js', `${EXT}/agent.js`);
-for (const f of ['manifest.json', 'popup.html', 'panel.html', 'devtools.html']) cpSync(`extension/${f}`, `${EXT}/${f}`);
+for (const f of ['popup.html', 'panel.html', 'devtools.html']) cpSync(`extension/${f}`, `${EXT}/${f}`);
+// A kiterjesztés verziója a package.json-é — egy forrás, hogy ne csússzon el.
+const { version } = JSON.parse(readFileSync('package.json', 'utf-8'));
+const manifest = JSON.parse(readFileSync('extension/manifest.json', 'utf-8'));
+writeFileSync(`${EXT}/manifest.json`, JSON.stringify({ ...manifest, version }, null, 2));
 cpSync('extension/_locales', `${EXT}/_locales`, { recursive: true });
 
 // A füstteszt nem tud a böngésző engedély-párbeszédére kattintani; a valódi
