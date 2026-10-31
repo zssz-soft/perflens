@@ -37,6 +37,4 @@ jobs:
             "perflens-extension-$GITHUB_REF_NAME.zip" \
             "perflens-devtool-$GITHUB_REF_NAME.js" \
             --title "PerfLens $GITHUB_REF_NAME" --generate-notes \
-            --notes "**Kiterjesztés:** csomagold ki a zip-et → \`chrome://extensions\` → Fejlesztői mód → *Kicsomagolt bővítmény betöltése* → a \`perflens-extension\` mappa. Chrome 128+.
-
-**Lapba ágyazva** (ha a Fejlesztői mód tiltott): a \`perflens-devtool-*.js\` tartalma DevTools → Sources → Snippets."
+            --notes-file .github/release-notes.md
