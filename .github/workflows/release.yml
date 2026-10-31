@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - name: A tag a package.json verziója
+        run: |
+          v="v$(node -p "require('./package.json').version")"
+          [ "$v" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME ≠ package.json $v"; exit 1; }
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Csomagolás
+        run: |
+          cd dist
+          cp -r extension perflens-extension
+          zip -qr "../perflens-extension-$GITHUB_REF_NAME.zip" perflens-extension
+          cp devtool.js "../perflens-devtool-$GITHUB_REF_NAME.js"
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "perflens-extension-$GITHUB_REF_NAME.zip" \
+            "perflens-devtool-$GITHUB_REF_NAME.js" \
+            --title "PerfLens $GITHUB_REF_NAME" --generate-notes \
+            --notes "**Kiterjesztés:** csomagold ki a zip-et → \`chrome://extensions\` → Fejlesztői mód → *Kicsomagolt bővítmény betöltése* → a \`perflens-extension\` mappa. Chrome 128+.
+
+**Lapba ágyazva** (ha a Fejlesztői mód tiltott): a \`perflens-devtool-*.js\` tartalma DevTools → Sources → Snippets."
