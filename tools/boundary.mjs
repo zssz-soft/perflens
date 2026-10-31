@@ -77,12 +77,11 @@ for (const dir of ['core', 'adapters', 'agent', 'dashboard', 'extension', 'worke
 for (const f of walk('tools')) for (const spec of importsOf(f)) {
   if (target(f, spec).startsWith('extension/')) bad(f, 'a tools/ nem importálhat a kiterjesztésből (4.1)', spec);
 }
-// 7. a KIVÁGHATÓ halmaz nem tud az alkalmazásról (4.1: „hogy a magot később
-//    saját repóba/npm-csomagba vágjuk"). A keretrendszer-adapterek (angular,
-//    stencil) mennek a csomaggal; az alkalmazás-adapter itt marad, és csak a
-//    belépési pontok tudnak róla: agent/sportsbook.ts, worker/install.ts,
-//    worker/entry.ts. Ha valaki a generic ügynökbe vagy a magba behúzza az
-//    app-adaptert, a kivágás csendben elromlik — ezért gépi szabály.
+// 7. a HORDOZHATÓ halmaz nem tud az alkalmazásról (4.1). A keretrendszer-
+//    adapterek (angular) mennek a maggal; az alkalmazás-adapterről csak a
+//    saját belépési pontod tudhat. Ha valaki a generic ügynökbe vagy a magba
+//    behúzza az app-adaptert, a hordozhatóság csendben elromlik — ezért gépi
+//    szabály.
 // Ide kerüljön az ALKALMAZÁS-adapter, ha bekötsz egyet (pl. 'adapters/<app>/'):
 // a keretrendszer-adapterek (angular) mehetnek a maggal, az app-tudás nem.
 const APP_ADAPTERS = [];

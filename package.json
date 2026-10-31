@@ -2,6 +2,7 @@
   "name": "perflens",
   "version": "0.6.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "PerfLens — böngésző-oldali teljesítmény-elemző: LoAF, INP, worker- és WS-forgalom élőben, szabályokkal. Kiterjesztésként VAGY a lapba ágyazva.",
   "scripts": {
