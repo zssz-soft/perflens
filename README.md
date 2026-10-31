@@ -22,6 +22,13 @@ elfogadja.
 
 ## Indulás
 
+**Build nélkül:** a [Releases](https://github.com/zssz-soft/perflens/releases)
+oldalról töltsd le a `perflens-extension-*.zip`-et, csomagold ki, és a
+`chrome://extensions` → Fejlesztői mód → „Kicsomagolt bővítmény betöltése"
+alatt válaszd a `perflens-extension` mappát.
+
+**Forrásból:**
+
 ```bash
 npm install
 npm run build          # → dist/agent.js, dist/devtool.js, dist/extension/
@@ -94,6 +101,8 @@ ELŐTT kiértékelve.
   kerül a pufferbe). Az URL-ből a query és a fragment törlődik.
 - **A felület a böngésző nyelvén** van: magyar böngészőben magyar, minden
   másban angol (`core/i18n/`).
+- **Kiadás:** emeld a `version`-t a `package.json`-ban, majd
+  `git tag vX.Y.Z && git push --tags` — a CI buildel és csatolja a zip-et.
 - A `playwright` pontos verzióra van rögzítve (nem `^`), hogy a füstteszt a már
   letöltött böngészőt használja; emeléskor `npx playwright install chromium` kell.
 
